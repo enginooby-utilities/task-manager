@@ -1,0 +1,19 @@
+{
+        "name": "task-manager",
+        "version": "1.0.0",
+        "description": "",
+        "main": "index.js",
+        "scripts": {
+                "start": "tsc-watch --onSuccess \"node src/app.js\""
+        },
+        "keywords": [],
+        "author": "",
+        "license": "ISC",
+        "dependencies": {
+                "mongodb": "^4.1.0",
+                "typescript": "^4.3.5"
+        },
+        "devDependencies": {
+                "tsc-watch": "^4.4.0"
+        }
+}
