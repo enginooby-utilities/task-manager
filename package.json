@@ -4,13 +4,15 @@
         "description": "",
         "main": "index.js",
         "scripts": {
-                "start": "tsc-watch --onSuccess \"node src/app.js\""
+                "start": "tsc-watch --onSuccess \"node src/app.js\"",
+                "mongodb": "/Users/enginoobz/mongodb/bin/mongod.exe --dbpath=/Users/enginoobz/mongodb-data"
         },
         "keywords": [],
         "author": "",
         "license": "ISC",
         "dependencies": {
                 "mongodb": "^4.1.0",
+                "mongoose": "^5.13.7",
                 "typescript": "^4.3.5"
         },
         "devDependencies": {
