@@ -27,6 +27,19 @@ app.get('/users', (req, res) => {
         })
 })
 
+// use :{param}  and retrieve value from req.params.{param}
+app.get('/users/:id', (req, res) => {
+        const _id = req.params.id
+        User.findById(_id).then((user) => {
+                if (!user) {
+                        return res.status(404).send()
+                }
+                res.send(user)
+        }).catch((error) => {
+                res.status(500).send()
+        })
+})
+
 app.listen(port, () => {
         console.log(`App is running at http://localhost:${port}`)
 })
