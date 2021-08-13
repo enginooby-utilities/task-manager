@@ -4,7 +4,7 @@
         "description": "",
         "main": "index.js",
         "scripts": {
-                "start": "tsc-watch --onSuccess \"node src/app.js\"",
+                "start": "tsc-watch --onSuccess \"node dist/server.js\"",
                 "mongodb": "/Users/enginoobz/mongodb/bin/mongod.exe --dbpath=/Users/enginoobz/mongodb-data"
         },
         "keywords": [],
