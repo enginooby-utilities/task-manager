@@ -15,15 +15,5 @@ const userSchema = new Schema<User>({
 // 3. Create a Model.
 const User = model<User>('User', userSchema);
 
-// REMOVE: try adding doc using the Model
-const me = new User({
-        name: 'enginoobz',
-        age: '2et5'
-}).save().then(() => {
-        // console.log(me);
-}).catch((error) => {
-        console.log('Error on saving doc', error)
-})
-
 // export with ES6 style
 export { User };
