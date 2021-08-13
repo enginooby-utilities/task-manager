@@ -11,11 +11,20 @@ app.use(express.json())
 
 app.post('/users', (req, res) => {
         new User(req.body).save()
-                .then((data) => {
-                        res.send(data)
+                .then((newUser) => {
+                        res.status(201).send(newUser)
                 }).catch(error => {
-                        res.send(error)
+                        res.status(400).send(error)
                 })
+})
+
+app.get('/users', (req, res) => {
+        // use empty filter {} to get all
+        User.find({}).then((users) => {
+                res.send(users)
+        }).catch((error) => {
+                res.status(500).send()
+        })
 })
 
 app.listen(port, () => {
