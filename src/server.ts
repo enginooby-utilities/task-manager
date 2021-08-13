@@ -1,5 +1,13 @@
-import { MongoClient } from 'mongodb';
-import mongoose, { model, Schema } from 'mongoose';
+import express, { Application } from 'express'
+import { MongoClient } from 'mongodb'
+import mongoose, { model, Schema } from 'mongoose'
+
+const app: Application = express()
+const port = process.env.PORT || 3002
+
+app.listen(port, () => {
+        console.log(`App is running at http://localhost:${port}`)
+})
 
 const DB_URL = 'mongodb://127.0.0.1:27017';
 const DB_NAME = 'task-manager';
