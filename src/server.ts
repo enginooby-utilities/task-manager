@@ -9,35 +9,33 @@ const port = process.env.PORT || 3002
 // to recognize the incoming POST/PUT request object as Json object, retrieved from req,body
 app.use(express.json())
 
-app.post('/users', (req, res) => {
-        new User(req.body).save()
-                .then((newUser) => {
-                        res.status(201).send(newUser)
-                }).catch(error => {
-                        res.status(400).send(error)
-                })
+app.post('/users', async (req, res) => {
+        try {
+                const user = await new User(req.body).save();
+                res.status(201).send(user)
+        } catch (error) {
+                res.status(400).send(error)
+        }
 })
 
-app.get('/users', (req, res) => {
-        // use empty filter {} to get all
-        User.find({}).then((users) => {
+app.get('/users', async (req, res) => {
+        try {
+                // use empty filter {} to get all
+                const users = await User.find({});
                 res.send(users)
-        }).catch((error) => {
+        } catch (error) {
                 res.status(500).send()
-        })
+        }
 })
 
 // use :{param}  and retrieve value from req.params.{param}
-app.get('/users/:id', (req, res) => {
-        const _id = req.params.id
-        User.findById(_id).then((user) => {
-                if (!user) {
-                        return res.status(404).send()
-                }
-                res.send(user)
-        }).catch((error) => {
+app.get('/users/:id', async (req, res) => {
+        try {
+                const user = await User.findById(req.params.id)
+                return user ? res.send(user) : res.status(404).send()
+        } catch (error) {
                 res.status(500).send()
-        })
+        }
 })
 
 app.listen(port, () => {
