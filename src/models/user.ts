@@ -5,13 +5,15 @@ import bcrypt from 'bcrypt'
 interface User {
         name: string,
         age: number,
+        email: string
         pwd: string
 }
 
 // 2. Create a Schema corresponding to the document interface.
 export const userSchema = new Schema<User>({
         name: { type: String, required: true },
-        age: { type: Number, required: true },
+        age: { type: Number, required: false },
+        email: { type: String, required: true, unique: true, trim: true },
         pwd: { type: String, required: true },
 })
 
