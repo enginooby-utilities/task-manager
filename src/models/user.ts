@@ -7,7 +7,7 @@ interface User {
 }
 
 // 2. Create a Schema corresponding to the document interface.
-const userSchema = new Schema<User>({
+export const userSchema = new Schema<User>({
         name: { type: String, required: true },
         age: { type: Number, required: true }
 })
