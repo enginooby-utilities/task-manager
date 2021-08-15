@@ -12,8 +12,18 @@ export const userSchema = new Schema<User>({
         age: { type: Number, required: true }
 })
 
+// hook schema to middleware to perform hashing pwd before saving for Create & Update request
+// ! this must performs before create model from schema
+userSchema.pre('save', async function (next) {
+        const user = this
+        console.log('before saving')
+        next()
+})
+
 // 3. Create a Model.
 const User = model<User>('User', userSchema);
+
+
 
 // export with ES6 style
 export { User };

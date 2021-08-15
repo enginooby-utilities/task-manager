@@ -38,8 +38,16 @@ userRouter.patch('/:id', async (req, res) => {
         if (!isRequestValid) return res.status(400).send({ error: "Invalid request" });
 
         try {
-                const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
-                return user ? res.send(user) : res.status(404).send()
+                //Problem:  findByIdAndUpdate() skip middleware
+                // const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+
+                // Solution: use findById(), manually update each key then save() to utilize middleware
+                const user = await User.findById(req.params.id)
+                if (!user) return res.sendStatus(404)
+                const requestKeys = Object.keys(req.body)
+                requestKeys.forEach(key => user[key] = req.body[key])
+                await user.save();
+                return res.send(user);
         } catch (error) {
                 res.status(500).send()
         }
