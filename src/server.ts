@@ -44,7 +44,7 @@ app.patch('/users/:id', async (req, res) => {
         if (!isRequestValid) return res.status(400).send({ error: "Invalid request" });
 
         try {
-                const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: false })
+                const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
                 return user ? res.send(user) : res.status(404).send()
         } catch (error) {
                 res.status(500).send()
@@ -53,12 +53,21 @@ app.patch('/users/:id', async (req, res) => {
 
 // UTIL
 function validateRequestByKeys(req: Request, schema: Schema<any>, unupdatableKeys: string[] = ['_id', '__v']) {
-        const userKeys = Object.keys(schema.paths);
+        const schemaKeys = Object.keys(schema.paths);
         const requestKeys = Object.keys(req.body)
-        const updatableKeys = userKeys.filter(key => !unupdatableKeys.includes(key))
+        const updatableKeys = schemaKeys.filter(key => !unupdatableKeys.includes(key))
         const isRequestValid = requestKeys.every(key => updatableKeys.includes(key))
         return isRequestValid;
 }
+
+app.delete('/users/:id', async (req, res) => {
+        try {
+                const user = await User.findByIdAndDelete(req.params.id)
+                user ? res.send(user) : res.sendStatus(404)
+        } catch (error) {
+                res.sendStatus(500)
+        }
+})
 
 app.listen(port, () => {
         console.log(`App is running at http://localhost:${port}`)
