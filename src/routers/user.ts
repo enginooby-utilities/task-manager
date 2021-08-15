@@ -1,5 +1,5 @@
-import { User, userSchema } from '../models/user'
-import { Schema } from 'mongoose'
+import { User } from '../models/user'
+import { Model } from 'mongoose'
 import { Request, Router } from 'express'
 
 const userRouter = Router()
@@ -34,7 +34,7 @@ userRouter.get('/:id', async (req, res) => {
 })
 
 userRouter.patch('/:id', async (req, res) => {
-        const isRequestValid = validateRequestByKeys(req, userSchema)
+        const isRequestValid = validateRequestByKeys(req, User)
         if (!isRequestValid) return res.status(400).send({ error: "Invalid request" });
 
         try {
@@ -46,10 +46,10 @@ userRouter.patch('/:id', async (req, res) => {
 })
 
 // UTIL
-function validateRequestByKeys(req: Request, schema: Schema<any>, unupdatableKeys: string[] = ['_id', '__v']) {
-        const schemaKeys = Object.keys(schema.paths);
+function validateRequestByKeys(req: Request, model: Model<any>, unupdatableKeys: string[] = ['_id', '__v']) {
+        const modalKeys = Object.keys(model.schema.paths);
         const requestKeys = Object.keys(req.body)
-        const updatableKeys = schemaKeys.filter(key => !unupdatableKeys.includes(key))
+        const updatableKeys = modalKeys.filter(key => !unupdatableKeys.includes(key))
         const isRequestValid = requestKeys.every(key => updatableKeys.includes(key))
         return isRequestValid;
 }
