@@ -23,6 +23,16 @@ userRouter.get('/', async (req, res) => {
         }
 })
 
+userRouter.post('/login', async (req, res) => {
+        try {
+                if (!req.body.email || !req.body.pwd) return res.status(400).send({ error: "Email and password are required." })
+                const user = await User.findByCredentials(req.body.email, req.body.pwd)
+                if (user) res.send(user)
+        } catch (error) {
+                res.status(400).send(error.message)
+        }
+})
+
 // use :{param}  and retrieve value from req.params.{param}
 userRouter.get('/:id', async (req, res) => {
         try {
